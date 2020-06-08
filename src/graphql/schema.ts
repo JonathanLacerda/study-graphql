@@ -23,11 +23,33 @@ const typeDefs = `
     type Query {
         allUsers: [User!] !
     }
+
+    type Mutation{
+        createUser(name: String!, email: String!): User
+    }
 `
 
 const resolvers = {
+
+    /**
+     * Resolver Trivial, não tem nescessidade quando o retorno é o mesmo nome oq parent
+     */
+    // User:{
+    //     id: (parent) => parent.id,
+    //     name: (parent) => parent.name,
+    //     email: (parent) => parent.email
+
+    // },
     Query:{
-        allUsers: () => []
+        allUsers: () => users
+    },
+    Mutation: {
+        createUser: (parent, args) => {
+            const newUser = Object.assign({id: users.length + 1}, args)
+            users.push(newUser)
+            return newUser
+
+        }
     }
 }
 
