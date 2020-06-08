@@ -1,4 +1,6 @@
 import * as express from 'express'
+import * as graphqlHTTP from 'express-graphql'
+import schema from './graphql/schema'
 
 
 class App {
@@ -17,11 +19,9 @@ class App {
      *  Setando rota
      */
     private middleware(): void {
-        this.express.use('/', (req: express.Request, res: express.Response, next:express.NextFunction) => {
-            res.send({
-                hello: 'Teste'
-            })
-        })
+        this.express.use('/graphql', graphqlHTTP({
+            schema: schema
+        }))
     }
 }
 
